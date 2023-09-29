@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rjd_app/Screens/Starter.dart';
+import 'package:rjd_app/Screens/VerifyScreen.dart';
 
 class About extends StatefulWidget {
   const About({super.key});
@@ -17,7 +18,6 @@ class _AboutState extends State<About> {
         body: SingleChildScrollView(
           child: Container(
             width: double.infinity,
-            height: 1000,
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment(0.21, 0.98),
@@ -61,7 +61,7 @@ class _AboutState extends State<About> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => Starter()));
+                                    builder: (context) => VerifyScreen()));
                           },
                           child: Container(
                             width: 16,
@@ -147,7 +147,7 @@ class _AboutState extends State<About> {
                               shape: OvalBorder(),
                             ),
                           ),
-                        )
+                        ),
                       ],
                     ),
                   ),
@@ -329,7 +329,10 @@ class _AboutState extends State<About> {
                       ),
                     ),
                   ],
-                )
+                ),
+                SizedBox(
+                  height: 40,
+                ),
               ],
             ),
           ),

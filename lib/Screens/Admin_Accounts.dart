@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rjd_app/Screens/About.dart';
 import 'package:rjd_app/Screens/Starter.dart';
+import 'package:rjd_app/Screens/VerifyScreen.dart';
 
 class Admin_Accounts extends StatefulWidget {
   const Admin_Accounts({super.key});
@@ -61,7 +62,7 @@ class _Admin_AccountsState extends State<Admin_Accounts> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => Starter()));
+                                    builder: (context) => VerifyScreen()));
                           },
                           child: Container(
                             width: 16,
