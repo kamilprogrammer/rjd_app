@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:rjd_app/Screens/HomeScreen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LOginScreenState();
+  State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _LOginScreenState extends State<LoginScreen> {
+class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -55,60 +56,6 @@ class _LOginScreenState extends State<LoginScreen> {
                               decoration: ShapeDecoration(
                                 color: Color(0xFFA0E5D9),
                                 shape: StarBorder.polygon(sides: 3),
-                              ),
-                            ),
-                          ),
-                          Positioned(
-                            left: 130.18,
-                            top: 866,
-                            child: Transform(
-                              transform: Matrix4.identity()
-                                ..translate(0.0, 0.0)
-                                ..rotateZ(3.14),
-                              child: Container(
-                                width: 212.18,
-                                height: 276,
-                                child: Stack(
-                                  children: [
-                                    Positioned(
-                                      left: 0,
-                                      top: -98.05,
-                                      child: Transform(
-                                        transform: Matrix4.identity()
-                                          ..translate(0.0, 0.0)
-                                          ..rotateZ(2.58),
-                                        child: Container(
-                                          width: 184,
-                                          height: 106,
-                                          decoration: ShapeDecoration(
-                                            color: Color(0xFF77C9DB),
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(40),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    Positioned(
-                                      left: -15,
-                                      top: -94,
-                                      child: Transform(
-                                        transform: Matrix4.identity()
-                                          ..translate(0.0, 0.0)
-                                          ..rotateZ(3.14),
-                                        child: Container(
-                                          width: 182,
-                                          height: 182,
-                                          decoration: ShapeDecoration(
-                                            color: Color(0xCE90F8FF),
-                                            shape: StarBorder.polygon(sides: 3),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
                               ),
                             ),
                           ),
@@ -259,7 +206,12 @@ class _LOginScreenState extends State<LoginScreen> {
                 children: [
                   Container(
                     child: TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => HomeScreen()));
+                      },
                       child: Container(
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
