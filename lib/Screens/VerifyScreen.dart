@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:rjd_app/Screens/About.dart';
-import 'package:rjd_app/Screens/Starter.dart';
 
 class VerifyScreen extends StatefulWidget {
   const VerifyScreen({super.key});

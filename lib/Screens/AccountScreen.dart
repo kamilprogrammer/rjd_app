@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rjd_app/Screens/Admin_Accounts.dart';
+import 'package:rjd_app/Widgets/AppBar.dart';
+import 'package:rjd_app/Widgets/Drawer.dart';
 
 class AccountScreen extends StatefulWidget {
   const AccountScreen({super.key});
@@ -14,6 +16,7 @@ class _AccountScreenState extends State<AccountScreen> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
+        drawer: MainDrawer(),
         body: SingleChildScrollView(
           child: Container(
             width: double.infinity,
@@ -31,112 +34,7 @@ class _AccountScreenState extends State<AccountScreen> {
             ),
             child: Column(
               children: [
-                SizedBox(
-                  height: 70,
-                ),
-                Center(
-                  child: Container(
-                    padding: EdgeInsets.only(left: 20, right: 20),
-                    width: MediaQuery.of(context).size.width - 60,
-                    height: 48,
-                    decoration: ShapeDecoration(
-                      color: Colors.white,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(9)),
-                      shadows: [
-                        BoxShadow(
-                          color: Color(0x3F000000),
-                          blurRadius: 14,
-                          offset: Offset(0, 10),
-                          spreadRadius: 6,
-                        )
-                      ],
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        GestureDetector(
-                          child: Container(
-                            width: 16,
-                            height: 16,
-                            child: Stack(
-                              children: [
-                                Positioned(
-                                  left: 0,
-                                  top: 0,
-                                  child: Container(
-                                    width: 5.33,
-                                    height: 5.33,
-                                    decoration: ShapeDecoration(
-                                      color: Color(0xFF090909),
-                                      shape: OvalBorder(),
-                                    ),
-                                  ),
-                                ),
-                                Positioned(
-                                  left: 10.67,
-                                  top: 10.67,
-                                  child: Container(
-                                    width: 5.33,
-                                    height: 5.33,
-                                    decoration: ShapeDecoration(
-                                      color: Color(0xFF090909),
-                                      shape: OvalBorder(),
-                                    ),
-                                  ),
-                                ),
-                                Positioned(
-                                  left: 0,
-                                  top: 10.67,
-                                  child: Container(
-                                    width: 5.33,
-                                    height: 5.33,
-                                    decoration: ShapeDecoration(
-                                      color: Color(0xFF090909),
-                                      shape: OvalBorder(),
-                                    ),
-                                  ),
-                                ),
-                                Positioned(
-                                  left: 10.67,
-                                  top: 0,
-                                  child: Container(
-                                    width: 5.33,
-                                    height: 5.33,
-                                    decoration: ShapeDecoration(
-                                      color: Color(0xFF090909),
-                                      shape: OvalBorder(),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        Text(
-                          'RJ-Data',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 16,
-                            fontFamily: 'Janna LT',
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                        Container(
-                          width: 30,
-                          height: 30,
-                          decoration: ShapeDecoration(
-                            image: DecorationImage(
-                              image: AssetImage("assets/images/logo.jpg"),
-                              fit: BoxFit.cover,
-                            ),
-                            shape: OvalBorder(),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                ),
+                MainAppBar(),
                 SizedBox(
                   height: 140,
                 ),
@@ -145,7 +43,7 @@ class _AccountScreenState extends State<AccountScreen> {
                   alignment: AlignmentDirectional.topCenter,
                   children: [
                     Container(
-                      width: 342,
+                      width: MediaQuery.of(context).size.width - 60,
                       height: 705,
                       decoration: ShapeDecoration(
                         gradient: LinearGradient(
@@ -226,7 +124,7 @@ class _AccountScreenState extends State<AccountScreen> {
                             'كامل عبد الرزاق الرفاعي',
                             style: TextStyle(
                               color: Colors.white,
-                              fontSize: 24,
+                              fontSize: 20,
                               fontFamily: 'Janna LT',
                               fontWeight: FontWeight.w700,
                             ),
@@ -240,7 +138,7 @@ class _AccountScreenState extends State<AccountScreen> {
                         'معلومات من انت؟',
                         style: TextStyle(
                           color: Colors.white,
-                          fontSize: 15,
+                          fontSize: 14,
                           fontFamily: 'Janna LT',
                           fontWeight: FontWeight.w400,
                         ),
@@ -252,7 +150,7 @@ class _AccountScreenState extends State<AccountScreen> {
                         'اسم الشركة',
                         style: TextStyle(
                           color: Colors.white,
-                          fontSize: 15,
+                          fontSize: 14,
                           fontFamily: 'Janna LT',
                           fontWeight: FontWeight.w400,
                         ),
@@ -267,10 +165,9 @@ class _AccountScreenState extends State<AccountScreen> {
                           begin: Alignment(1.00, 0.08),
                           end: Alignment(-1, -0.08),
                           colors: [
-                            Color(0xFFFF0000),
                             Color(0xFFFF1212),
-                            Color(0xFFF04A4A),
-                            Color(0xFFFF6161)
+                            Color.fromARGB(202, 240, 74, 74),
+                            Color(0xFFFF0000),
                           ],
                         ),
                         shape: RoundedRectangleBorder(
@@ -279,7 +176,7 @@ class _AccountScreenState extends State<AccountScreen> {
                       ),
                       child: TextButton(
                         onPressed: () {},
-                        child: Text(
+                        child: const Text(
                           'تسجيل الخروج',
                           style: TextStyle(
                             color: Colors.white,
@@ -291,11 +188,10 @@ class _AccountScreenState extends State<AccountScreen> {
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.only(top: 330),
+                      margin: const EdgeInsets.only(top: 330),
                       child: Row(
                         children: [
                           Container(
-                            margin: EdgeInsets.only(right: 64),
                             child: Text(
                               'معلومات اضافية',
                               style: TextStyle(
@@ -308,7 +204,7 @@ class _AccountScreenState extends State<AccountScreen> {
                             ),
                           )
                         ],
-                        mainAxisAlignment: MainAxisAlignment.end,
+                        mainAxisAlignment: MainAxisAlignment.center,
                       ),
                     ),
                     Container(
@@ -353,17 +249,14 @@ class _AccountScreenState extends State<AccountScreen> {
                         ],
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 60,
                     ),
                     Container(
-                      margin: EdgeInsets.only(top: 500),
+                      margin: const EdgeInsets.only(top: 500),
                       child: Row(
                         children: [
                           Container(
-                            margin: EdgeInsets.only(
-                              right: 64,
-                            ),
                             child: Text(
                               'اسم الشركة',
                               style: TextStyle(
@@ -376,7 +269,7 @@ class _AccountScreenState extends State<AccountScreen> {
                             ),
                           )
                         ],
-                        mainAxisAlignment: MainAxisAlignment.end,
+                        mainAxisAlignment: MainAxisAlignment.center,
                       ),
                     ),
                     SizedBox(

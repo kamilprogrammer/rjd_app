@@ -17,21 +17,31 @@ class _StarterState extends State<Starter> {
         body: SingleChildScrollView(
           child: Column(
             children: [
+              SizedBox(
+                height: 165,
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
-                    margin: EdgeInsets.only(top: 160),
-                    width: 170,
-                    height: 170,
+                    width: 138,
+                    height: 138,
                     decoration: ShapeDecoration(
                       image: DecorationImage(
-                        image: AssetImage('assets/images/logo.jpg'),
+                        image: AssetImage("assets/images/logo.jpg"),
                         fit: BoxFit.cover,
                       ),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
+                        borderRadius: BorderRadius.circular(35),
                       ),
+                      shadows: [
+                        BoxShadow(
+                          color: Color(0x7F000000),
+                          blurRadius: 28,
+                          offset: Offset(0, 0),
+                          spreadRadius: 0,
+                        )
+                      ],
                     ),
                   )
                 ],
@@ -40,23 +50,21 @@ class _StarterState extends State<Starter> {
                 height: 10,
               ),
               Text(
-                'Rjdata-App',
+                'RJ-Data-App',
                 style: TextStyle(
-                  color: Colors.black.withOpacity(0.7599999904632568),
-                  fontSize: 18,
+                  color: Color(0xFF5B4F4F),
+                  fontSize: 16,
                   fontFamily: 'Janna LT',
                   fontWeight: FontWeight.w700,
-                  height: 0,
                 ),
               ),
               Text(
                 'version: 1.0.0',
                 style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 18,
+                  color: Color(0xFF5B5050),
+                  fontSize: 16,
                   fontFamily: 'Janna LT',
                   fontWeight: FontWeight.w700,
-                  height: 0,
                 ),
               ),
               SizedBox(
@@ -67,7 +75,8 @@ class _StarterState extends State<Starter> {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => LoginScreen()));
                 },
-                style: TextButton.styleFrom(primary: const Color(0xFF1CEC95)),
+                style: TextButton.styleFrom(
+                    primary: Color.fromARGB(255, 28, 198, 236)),
                 child: Container(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -76,7 +85,7 @@ class _StarterState extends State<Starter> {
                         'التالي',
                         style: TextStyle(
                           color: Colors.white,
-                          fontSize: 24,
+                          fontSize: 20,
                           fontFamily: 'Janna LT',
                           fontWeight: FontWeight.w700,
                           height: 0,
@@ -84,16 +93,16 @@ class _StarterState extends State<Starter> {
                       ),
                     ],
                   ),
-                  width: 310,
-                  height: 65,
+                  width: MediaQuery.of(context).size.width - 100,
+                  height: 52,
                   decoration: ShapeDecoration(
                     gradient: LinearGradient(
                       begin: Alignment(-1.00, -0.04),
                       end: Alignment(1, 0.04),
                       colors: [
-                        Color(0xFF1CEC95),
                         Color(0xFF78FFC6),
-                        Color(0xFF1CEC8D)
+                        Color(0xFF1CECBA),
+                        Color(0xFF1CE0EC),
                       ],
                     ),
                     shape: RoundedRectangleBorder(

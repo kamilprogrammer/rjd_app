@@ -70,10 +70,10 @@ class _LoginScreenState extends State<LoginScreen> {
                   Container(
                     margin: EdgeInsets.only(right: 50),
                     child: Text(
-                      ' تسجيل الدخول',
+                      'تسجيل الدخول',
                       style: TextStyle(
                         color: Colors.black,
-                        fontSize: 28,
+                        fontSize: 22,
                         fontFamily: 'Janna LT',
                         fontWeight: FontWeight.w700,
                         height: 0,
@@ -92,7 +92,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       'الرجاء تسجيل الدخول قبل المتابعة',
                       style: TextStyle(
                         color: Colors.black.withOpacity(0.5299999713897705),
-                        fontSize: 18,
+                        fontSize: 16,
                         fontFamily: 'Janna LT',
                         fontWeight: FontWeight.w700,
                         height: 0,
@@ -122,7 +122,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         )
                       ],
                     ),
-                    width: MediaQuery.of(context).size.width - 60,
+                    width: MediaQuery.of(context).size.width - 100,
                     child: TextField(
                       style: TextStyle(
                         color: Colors.black.withOpacity(0.6499999761581421),
@@ -171,7 +171,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         )
                       ],
                     ),
-                    width: MediaQuery.of(context).size.width - 60,
+                    width: MediaQuery.of(context).size.width - 100,
                     child: TextField(
                       style: TextStyle(
                         color: Colors.black.withOpacity(0.6499999761581421),
@@ -202,58 +202,47 @@ class _LoginScreenState extends State<LoginScreen> {
               SizedBox(
                 height: 20,
               ),
-              Row(
-                children: [
-                  Container(
-                    child: TextButton(
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => HomeScreen()));
-                      },
-                      child: Container(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Icon(
-                              Icons.arrow_back_outlined,
-                              color: Colors.white,
-                            ),
-                            Text(
-                              'الدخول',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 20,
-                                fontFamily: 'Janna LT',
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                          ],
-                        ),
-                        width: 126,
-                        height: 49,
-                        decoration: ShapeDecoration(
-                          gradient: LinearGradient(
-                            begin: Alignment(0.99, 0.13),
-                            end: Alignment(-0.99, -0.13),
-                            colors: [
-                              Color(0xFF2DCEE4),
-                              Color(0xFF50DEF2),
-                              Color(0xFF79ECFB),
-                              Color(0xFF88F0FF)
-                            ],
-                          ),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(14),
-                          ),
+              SizedBox(
+                height: 20,
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => HomeScreen()));
+                },
+                child: Container(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'الدخول',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontFamily: 'Janna LT',
+                          fontWeight: FontWeight.w700,
                         ),
                       ),
-                    ),
-                    margin: EdgeInsets.only(left: 22),
+                    ],
                   ),
-                ],
-                mainAxisAlignment: MainAxisAlignment.start,
+                  width: 118,
+                  height: 40,
+                  decoration: ShapeDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment(0.99, 0.13),
+                      end: Alignment(-0.99, -0.13),
+                      colors: [
+                        Color(0xFF88F0FF),
+                        Color(0xFF79ECFB),
+                        Color(0xFF50DEF2),
+                        Color(0xFF2DCEE4),
+                      ],
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(14),
+                    ),
+                  ),
+                ),
               ),
             ],
           ),
