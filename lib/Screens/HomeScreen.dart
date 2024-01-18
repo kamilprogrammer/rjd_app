@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:rjd_app/Screens/AccountScreen.dart';
 import 'package:rjd_app/Widgets/AppBar.dart';
 import 'package:rjd_app/Widgets/Drawer.dart';
+import 'package:http/http.dart' as http;
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -12,6 +15,39 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  TextEditingController title_controller =
+      TextEditingController(text: 'This is a big proplem please help!');
+  TextEditingController kind_controller =
+      TextEditingController(text: 'Electronical with Albir servers');
+  TextEditingController place_controller =
+      TextEditingController(text: 'Homs , Albir 3');
+  TextEditingController others_controller =
+      TextEditingController(text: 'Nothing ');
+  void fetch(String title, String kind, String others, String place) async {
+    Map<String, dynamic> request = {
+      'Title': title,
+      'Kind': kind,
+      'place': place,
+      "user_id": 1,
+      "Other": others,
+    };
+    var re_request = jsonEncode(request);
+
+    final uri = Uri.http('127.0.0.1:8000', '/api/add_post');
+    final response = await http.post(uri, body: re_request, headers: {
+      "Access-Control-Allow-Origin": "*",
+      'Accept': '*/*',
+      'Content-type': 'application/json',
+    });
+
+    if (response.statusCode == 201) {
+      Map<String, dynamic> map = json.decode(response.body);
+      return json.decode(response.body);
+    } else {
+      throw Exception('err');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -48,7 +84,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        'الابلاغ عن مشكلة',
+                        'Report a Problem',
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 24,
@@ -69,9 +105,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       Row(
                         children: [
                           Container(
-                            margin: EdgeInsets.only(right: 50),
+                            margin: EdgeInsets.only(left: 50),
                             child: Text(
-                              'نوع المشكلة',
+                              'Title of The Proplem:',
                               style: TextStyle(
                                 color:
                                     Colors.white.withOpacity(0.800000011920929),
@@ -82,7 +118,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           )
                         ],
-                        mainAxisAlignment: MainAxisAlignment.end,
+                        mainAxisAlignment: MainAxisAlignment.start,
                       ),
                       SizedBox(
                         height: 6,
@@ -107,7 +143,8 @@ class _HomeScreenState extends State<HomeScreen> {
                               ],
                             ),
                             child: TextField(
-                              textAlign: TextAlign.right,
+                              controller: title_controller,
+                              textAlign: TextAlign.left,
                               style: TextStyle(
                                 color: Colors.black
                                     .withOpacity(0.6499999761581421),
@@ -116,8 +153,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 fontWeight: FontWeight.w700,
                               ),
                               decoration: InputDecoration(
-                                  hintText: '........اكتب هنا',
-                                  contentPadding: EdgeInsets.only(right: 20),
+                                  hintText: 'Write Here......',
+                                  contentPadding: EdgeInsets.only(left: 20),
                                   border: InputBorder.none,
                                   fillColor: Colors.red),
                             ),
@@ -130,9 +167,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       Row(
                         children: [
                           Container(
-                            margin: EdgeInsets.only(right: 50),
+                            margin: EdgeInsets.only(left: 50),
                             child: Text(
-                              'نوع المشكلة',
+                              'The Kind of the Proplem:',
                               style: TextStyle(
                                 color:
                                     Colors.white.withOpacity(0.800000011920929),
@@ -143,7 +180,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           )
                         ],
-                        mainAxisAlignment: MainAxisAlignment.end,
+                        mainAxisAlignment: MainAxisAlignment.start,
                       ),
                       SizedBox(
                         height: 6,
@@ -168,7 +205,8 @@ class _HomeScreenState extends State<HomeScreen> {
                               ],
                             ),
                             child: TextField(
-                              textAlign: TextAlign.right,
+                              controller: kind_controller,
+                              textAlign: TextAlign.left,
                               style: TextStyle(
                                 color: Colors.black
                                     .withOpacity(0.6499999761581421),
@@ -177,8 +215,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 fontWeight: FontWeight.w700,
                               ),
                               decoration: InputDecoration(
-                                  hintText: '........اكتب هنا',
-                                  contentPadding: EdgeInsets.only(right: 20),
+                                  hintText: 'Write Here......',
+                                  contentPadding: EdgeInsets.only(left: 20),
                                   border: InputBorder.none,
                                   fillColor: Colors.red),
                             ),
@@ -191,9 +229,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       Row(
                         children: [
                           Container(
-                            margin: EdgeInsets.only(right: 50),
+                            margin: EdgeInsets.only(left: 50),
                             child: Text(
-                              'نوع المشكلة',
+                              'The Place of the Proplem',
                               style: TextStyle(
                                 color:
                                     Colors.white.withOpacity(0.800000011920929),
@@ -204,7 +242,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           )
                         ],
-                        mainAxisAlignment: MainAxisAlignment.end,
+                        mainAxisAlignment: MainAxisAlignment.start,
                       ),
                       SizedBox(
                         height: 6,
@@ -229,7 +267,8 @@ class _HomeScreenState extends State<HomeScreen> {
                               ],
                             ),
                             child: TextField(
-                              textAlign: TextAlign.right,
+                              controller: place_controller,
+                              textAlign: TextAlign.left,
                               style: TextStyle(
                                 color: Colors.black
                                     .withOpacity(0.6499999761581421),
@@ -238,8 +277,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 fontWeight: FontWeight.w700,
                               ),
                               decoration: InputDecoration(
-                                  hintText: '........اكتب هنا',
-                                  contentPadding: EdgeInsets.only(right: 20),
+                                  hintText: 'Write Here......',
+                                  contentPadding: EdgeInsets.only(left: 20),
                                   border: InputBorder.none,
                                   fillColor: Colors.red),
                             ),
@@ -252,9 +291,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       Row(
                         children: [
                           Container(
-                            margin: EdgeInsets.only(right: 50),
+                            margin: EdgeInsets.only(left: 50),
                             child: Text(
-                              'ملاحظات اضافية',
+                              'Additional details about the Proplem:',
                               style: TextStyle(
                                 color:
                                     Colors.white.withOpacity(0.800000011920929),
@@ -265,7 +304,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           )
                         ],
-                        mainAxisAlignment: MainAxisAlignment.end,
+                        mainAxisAlignment: MainAxisAlignment.start,
                       ),
                       SizedBox(
                         height: 6,
@@ -280,7 +319,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               color: Color(0xFF717AA4),
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(4)),
-                              shadows: [
+                              shadows: const [
                                 BoxShadow(
                                   color: Color(0x3F000000),
                                   blurRadius: 23,
@@ -290,7 +329,8 @@ class _HomeScreenState extends State<HomeScreen> {
                               ],
                             ),
                             child: TextField(
-                              textAlign: TextAlign.right,
+                              controller: others_controller,
+                              textAlign: TextAlign.left,
                               style: TextStyle(
                                 color: Colors.black
                                     .withOpacity(0.6499999761581421),
@@ -300,9 +340,9 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                               maxLines: 10,
                               decoration: InputDecoration(
-                                  hintText: '........اكتب هنا',
+                                  hintText: 'Write Here......',
                                   contentPadding:
-                                      EdgeInsets.only(right: 20, top: 8),
+                                      EdgeInsets.only(left: 20, top: 12),
                                   border: InputBorder.none,
                                   fillColor: Colors.red),
                             ),
@@ -317,13 +357,17 @@ class _HomeScreenState extends State<HomeScreen> {
                         height: 64,
                         child: TextButton(
                           onPressed: () {
+                            fetch(title_controller.text, kind_controller.text,
+                                others_controller.text, place_controller.text);
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => AccountScreen()));
+                                    builder: (context) => AccountScreen(
+                                          username: 'HI, I am not kamel',
+                                        )));
                           },
                           child: Text(
-                            'تقديم الطلب',
+                            'Report',
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 20,

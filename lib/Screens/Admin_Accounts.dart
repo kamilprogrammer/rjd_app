@@ -1,8 +1,17 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:rjd_app/Screens/About.dart';
 import 'package:rjd_app/Screens/VerifyScreen.dart';
 import 'package:rjd_app/Widgets/AppBar.dart';
+import 'package:flutter/services.dart';
 import 'package:rjd_app/Widgets/Drawer.dart';
+import 'package:http/http.dart' as http;
+import 'package:rjd_app/Widgets/new_user.dart';
+import 'package:rjd_app/Widgets/user.dart';
+import 'package:rjd_app/Widgets/user_1.dart';
 
 class Admin_Accounts extends StatefulWidget {
   const Admin_Accounts({super.key});
@@ -12,15 +21,42 @@ class Admin_Accounts extends StatefulWidget {
 }
 
 class _Admin_AccountsState extends State<Admin_Accounts> {
+  List _users = [];
+  List users_ = [];
+
+  Future users() async {
+    final uri = Uri.parse('http://127.0.0.1:8000/api/users');
+    final response = await http.post(uri);
+    final response1 = response.body;
+    print(response1);
+    var users = jsonDecode(response1);
+    setState(() {
+      _users = users;
+      users_ = _users;
+    });
+
+    return jsonDecode(response.body);
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
+        floatingActionButton: FloatingActionButton(
+            onPressed: () {
+              users().then((value) => {
+                    setState(() {
+                      users_ = _users;
+                    })
+                  });
+            },
+            child: Icon(Icons.replay)),
         drawer: MainDrawer(),
         body: SingleChildScrollView(
           child: Container(
             width: double.infinity,
+            height: 1200,
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment(0.21, 0.98),
@@ -33,682 +69,86 @@ class _Admin_AccountsState extends State<Admin_Accounts> {
                 ],
               ),
             ),
-            child: Column(
-              children: [
-                MainAppBar(),
-                SizedBox(
-                  height: 50,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'المستخدمون',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 24,
-                        fontFamily: 'Janna LT',
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Container(
-                  padding: EdgeInsets.only(right: 10, top: 6, bottom: 6),
-                  width: 310,
-                  height: 70,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  MainAppBar(),
+                  SizedBox(
+                    height: 50,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Column(
-                        children: [
-                          Text(
-                            'كامل عبد الرزاق الرفاعي',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 16,
-                              fontFamily: 'Janna LT',
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(left: 40),
-                            child: Text(
-                              'ار جي داتا للشبكات',
-                              style: TextStyle(
-                                color: Colors.black.withOpacity(0.5),
-                                fontSize: 14,
-                                fontFamily: 'Janna LT',
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Container(
-                        width: 42,
-                        height: 42,
-                        decoration: ShapeDecoration(
-                          image: DecorationImage(
-                            image: AssetImage("assets/images/logo.jpg"),
-                            fit: BoxFit.cover,
-                          ),
-                          shape: OvalBorder(),
+                      Text(
+                        'List of Users',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 24,
+                          fontFamily: 'Janna LT',
+                          fontWeight: FontWeight.w700,
                         ),
-                      )
-                    ],
-                  ),
-                  decoration: ShapeDecoration(
-                    color: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(26),
-                    ),
-                    shadows: [
-                      BoxShadow(
-                        color: Color(0x3F000000),
-                        blurRadius: 19,
-                        offset: Offset(-10, 17),
-                        spreadRadius: 6,
-                      )
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Container(
-                  padding: EdgeInsets.only(right: 10, top: 6, bottom: 6),
-                  width: 310,
-                  height: 70,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Column(
-                        children: [
-                          Text(
-                            'كامل عبد الرزاق الرفاعي',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 16,
-                              fontFamily: 'Janna LT',
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(left: 40),
-                            child: Text(
-                              'ار جي داتا للشبكات',
-                              style: TextStyle(
-                                color: Colors.black.withOpacity(0.5),
-                                fontSize: 14,
-                                fontFamily: 'Janna LT',
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                          )
-                        ],
                       ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Container(
-                        width: 42,
-                        height: 42,
-                        decoration: ShapeDecoration(
-                          image: DecorationImage(
-                            image: AssetImage("assets/images/logo.jpg"),
-                            fit: BoxFit.cover,
-                          ),
-                          shape: OvalBorder(),
-                        ),
-                      )
                     ],
                   ),
-                  decoration: ShapeDecoration(
-                    color: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(26),
-                    ),
-                    shadows: [
-                      BoxShadow(
-                        color: Color(0x3F000000),
-                        blurRadius: 19,
-                        offset: Offset(-10, 17),
-                        spreadRadius: 6,
-                      )
-                    ],
+                  SizedBox(
+                    height: 10,
                   ),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Container(
-                  padding: EdgeInsets.only(right: 10, top: 6, bottom: 6),
-                  width: 310,
-                  height: 70,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Column(
-                        children: [
-                          Text(
-                            'كامل عبد الرزاق الرفاعي',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 16,
-                              fontFamily: 'Janna LT',
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(left: 40),
-                            child: Text(
-                              'ار جي داتا للشبكات',
-                              style: TextStyle(
-                                color: Colors.black.withOpacity(0.5),
-                                fontSize: 14,
-                                fontFamily: 'Janna LT',
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                          )
-                        ],
+                  Container(
+                    color: Color.fromARGB(0, 153, 115, 0),
+                    width: MediaQuery.of(context).size.width - 110,
+                    height: _users.length * 110,
+                    child: ListView.separated(
+                      separatorBuilder: (context, index) => SizedBox(
+                        height: 40,
                       ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Container(
-                        width: 42,
-                        height: 42,
-                        decoration: ShapeDecoration(
-                          image: DecorationImage(
-                            image: AssetImage("assets/images/logo.jpg"),
-                            fit: BoxFit.cover,
-                          ),
-                          shape: OvalBorder(),
-                        ),
-                      )
-                    ],
-                  ),
-                  decoration: ShapeDecoration(
-                    color: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(26),
-                    ),
-                    shadows: [
-                      BoxShadow(
-                        color: Color(0x3F000000),
-                        blurRadius: 19,
-                        offset: Offset(-10, 17),
-                        spreadRadius: 6,
-                      )
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Container(
-                  padding: EdgeInsets.only(right: 10, top: 6, bottom: 6),
-                  width: 310,
-                  height: 70,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Column(
-                        children: [
-                          Text(
-                            'كامل عبد الرزاق الرفاعي',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 16,
-                              fontFamily: 'Janna LT',
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(left: 40),
-                            child: Text(
-                              'ار جي داتا للشبكات',
-                              style: TextStyle(
-                                color: Colors.black.withOpacity(0.5),
-                                fontSize: 14,
-                                fontFamily: 'Janna LT',
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Container(
-                        width: 42,
-                        height: 42,
-                        decoration: ShapeDecoration(
-                          image: DecorationImage(
-                            image: AssetImage("assets/images/logo.jpg"),
-                            fit: BoxFit.cover,
-                          ),
-                          shape: OvalBorder(),
-                        ),
-                      )
-                    ],
-                  ),
-                  decoration: ShapeDecoration(
-                    color: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(26),
-                    ),
-                    shadows: [
-                      BoxShadow(
-                        color: Color(0x3F000000),
-                        blurRadius: 19,
-                        offset: Offset(-10, 17),
-                        spreadRadius: 6,
-                      )
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: 60,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'المستجدون',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 24,
-                        fontFamily: 'Janna LT',
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Container(
-                  padding: EdgeInsets.only(right: 10, top: 6, bottom: 6),
-                  width: 310,
-                  height: 70,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      GestureDetector(
-                        child: Container(
-                          margin: EdgeInsets.only(right: 10),
-                          width: 50,
-                          height: 50,
-                          child: Icon(
-                            Icons.done_all,
-                            color: Colors.blue,
-                            size: 24.0,
-                          ),
-                          decoration: ShapeDecoration(
-                            color: Colors.white,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            shadows: [
-                              BoxShadow(
-                                color: Color(0x3F000000),
-                                blurRadius: 10,
-                                offset: Offset(-9, 14),
-                                spreadRadius: 9,
+                      itemCount: users_.length.toInt(),
+                      itemBuilder: (context, index) {
+                        final users_ = _users;
+                        final _index = index;
+
+                        return Slidable(
+                          endActionPane: ActionPane(
+                            motion: const StretchMotion(),
+                            children: [
+                              SlidableAction(
+                                onPressed: (context) => {
+                                  Clipboard.setData(ClipboardData(
+                                      text: _users[index]['phone']))
+                                },
+                                backgroundColor: Colors.transparent,
+                                icon: Icons.phone_callback,
+                                label: "Phone Number",
                               )
                             ],
                           ),
-                        ),
-                      ),
-                      Column(
-                        children: [
-                          Text(
-                            'كامل عبد الرزاق الرفاعي',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 16,
-                              fontFamily: 'Janna LT',
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(left: 40),
-                            child: Text(
-                              'ار جي داتا للشبكات',
-                              style: TextStyle(
-                                color: Colors.black.withOpacity(0.5),
-                                fontSize: 14,
-                                fontFamily: 'Janna LT',
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Container(
-                        width: 42,
-                        height: 42,
-                        decoration: ShapeDecoration(
-                          image: DecorationImage(
-                            image: AssetImage("assets/images/logo.jpg"),
-                            fit: BoxFit.cover,
-                          ),
-                          shape: OvalBorder(),
-                        ),
-                      )
-                    ],
-                  ),
-                  decoration: ShapeDecoration(
-                    color: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(26),
-                    ),
-                    shadows: [
-                      BoxShadow(
-                        color: Color(0x3F000000),
-                        blurRadius: 19,
-                        offset: Offset(-10, 17),
-                        spreadRadius: 6,
-                      )
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Container(
-                  padding: EdgeInsets.only(right: 10, top: 6, bottom: 6),
-                  width: 310,
-                  height: 70,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      GestureDetector(
-                        child: Container(
-                          margin: EdgeInsets.only(right: 10),
-                          width: 50,
-                          height: 50,
-                          child: Icon(
-                            Icons.done_all,
-                            color: Colors.blue,
-                            size: 24.0,
-                          ),
-                          decoration: ShapeDecoration(
-                            color: Colors.white,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            shadows: [
-                              BoxShadow(
-                                color: Color(0x3F000000),
-                                blurRadius: 10,
-                                offset: Offset(-9, 14),
-                                spreadRadius: 9,
+                          startActionPane: ActionPane(
+                            motion: const StretchMotion(),
+                            children: [
+                              SlidableAction(
+                                onPressed: (context) => {
+                                  FlutterPhoneDirectCaller.callNumber(
+                                      _users[index]['phone'])
+                                },
+                                backgroundColor: Colors.transparent,
+                                icon: Icons.phone_callback,
+                                label: "Make a Call",
                               )
                             ],
                           ),
-                        ),
-                      ),
-                      Column(
-                        children: [
-                          Text(
-                            'كامل عبد الرزاق الرفاعي',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 16,
-                              fontFamily: 'Janna LT',
-                              fontWeight: FontWeight.w700,
-                            ),
+                          child: New_User(
+                            name: users_[index]['username'].toString(),
+                            company_name: users_[index]['company'].toString(),
+                            phone: users_[index]['phone'].toString(),
                           ),
-                          Container(
-                            margin: EdgeInsets.only(left: 40),
-                            child: Text(
-                              'ار جي داتا للشبكات',
-                              style: TextStyle(
-                                color: Colors.black.withOpacity(0.5),
-                                fontSize: 14,
-                                fontFamily: 'Janna LT',
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Container(
-                        width: 42,
-                        height: 42,
-                        decoration: ShapeDecoration(
-                          image: DecorationImage(
-                            image: AssetImage("assets/images/logo.jpg"),
-                            fit: BoxFit.cover,
-                          ),
-                          shape: OvalBorder(),
-                        ),
-                      )
-                    ],
-                  ),
-                  decoration: ShapeDecoration(
-                    color: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(26),
+                        );
+                      },
                     ),
-                    shadows: [
-                      BoxShadow(
-                        color: Color(0x3F000000),
-                        blurRadius: 19,
-                        offset: Offset(-10, 17),
-                        spreadRadius: 6,
-                      )
-                    ],
                   ),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Container(
-                  padding: EdgeInsets.only(right: 10, top: 6, bottom: 6),
-                  width: 310,
-                  height: 70,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      GestureDetector(
-                        child: Container(
-                          margin: EdgeInsets.only(right: 10),
-                          width: 50,
-                          height: 50,
-                          child: Icon(
-                            Icons.done_all,
-                            color: Colors.blue,
-                            size: 24.0,
-                          ),
-                          decoration: ShapeDecoration(
-                            color: Colors.white,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            shadows: [
-                              BoxShadow(
-                                color: Color(0x3F000000),
-                                blurRadius: 10,
-                                offset: Offset(-9, 14),
-                                spreadRadius: 9,
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                      Column(
-                        children: [
-                          Text(
-                            'كامل عبد الرزاق الرفاعي',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 16,
-                              fontFamily: 'Janna LT',
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(left: 40),
-                            child: Text(
-                              'ار جي داتا للشبكات',
-                              style: TextStyle(
-                                color: Colors.black.withOpacity(0.5),
-                                fontSize: 14,
-                                fontFamily: 'Janna LT',
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Container(
-                        width: 42,
-                        height: 42,
-                        decoration: ShapeDecoration(
-                          image: DecorationImage(
-                            image: AssetImage("assets/images/logo.jpg"),
-                            fit: BoxFit.cover,
-                          ),
-                          shape: OvalBorder(),
-                        ),
-                      )
-                    ],
+                  SizedBox(
+                    height: 60,
                   ),
-                  decoration: ShapeDecoration(
-                    color: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(26),
-                    ),
-                    shadows: [
-                      BoxShadow(
-                        color: Color(0x3F000000),
-                        blurRadius: 19,
-                        offset: Offset(-10, 17),
-                        spreadRadius: 6,
-                      )
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Container(
-                  padding: EdgeInsets.only(right: 10, top: 6, bottom: 6),
-                  width: 310,
-                  height: 70,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      GestureDetector(
-                        child: Container(
-                          margin: EdgeInsets.only(right: 10),
-                          width: 50,
-                          height: 50,
-                          child: Icon(
-                            Icons.done_all,
-                            color: Colors.blue,
-                            size: 24.0,
-                          ),
-                          decoration: ShapeDecoration(
-                            color: Colors.white,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            shadows: [
-                              BoxShadow(
-                                color: Color(0x3F000000),
-                                blurRadius: 10,
-                                offset: Offset(-9, 14),
-                                spreadRadius: 9,
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                      Column(
-                        children: [
-                          Text(
-                            'كامل عبد الرزاق الرفاعي',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 16,
-                              fontFamily: 'Janna LT',
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(left: 40),
-                            child: Text(
-                              'ار جي داتا للشبكات',
-                              style: TextStyle(
-                                color: Colors.black.withOpacity(0.5),
-                                fontSize: 14,
-                                fontFamily: 'Janna LT',
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Container(
-                        width: 42,
-                        height: 42,
-                        decoration: ShapeDecoration(
-                          image: DecorationImage(
-                            image: AssetImage("assets/images/logo.jpg"),
-                            fit: BoxFit.cover,
-                          ),
-                          shape: OvalBorder(),
-                        ),
-                      )
-                    ],
-                  ),
-                  decoration: ShapeDecoration(
-                    color: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(26),
-                    ),
-                    shadows: [
-                      BoxShadow(
-                        color: Color(0x3F000000),
-                        blurRadius: 19,
-                        offset: Offset(-10, 17),
-                        spreadRadius: 6,
-                      )
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

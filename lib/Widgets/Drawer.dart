@@ -67,8 +67,12 @@ class _MainDrawerState extends State<MainDrawer> {
               ),
               ListTile(
                 onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => AccountScreen()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => AccountScreen(
+                                username: 'Kamel abdulrazzak rifai',
+                              )));
                 },
                 title: Text(
                   'Account',

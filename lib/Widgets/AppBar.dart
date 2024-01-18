@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rjd_app/Screens/AccountScreen.dart';
 import 'package:rjd_app/Screens/HomeScreen.dart';
+import 'package:rjd_app/Screens/LoginScreen.dart';
 
 class MainAppBar extends StatefulWidget {
   const MainAppBar({super.key});
@@ -68,7 +69,7 @@ class _MainAppBarState extends State<MainAppBar> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => AccountScreen()));
+                              builder: (context) => LoginScreen()));
                     },
                     child: Container(
                       width: 30,

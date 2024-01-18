@@ -4,14 +4,26 @@ import 'package:rjd_app/Widgets/AppBar.dart';
 import 'package:rjd_app/Widgets/Drawer.dart';
 
 class AccountScreen extends StatefulWidget {
-  const AccountScreen({super.key});
+  final String username;
+
+  const AccountScreen({
+    super.key,
+    required this.username,
+  });
 
   @override
   State<AccountScreen> createState() => _AccountScreenState();
 }
 
 class _AccountScreenState extends State<AccountScreen> {
+  String name = '';
   @override
+  void initState() {
+    name = widget.username;
+
+    super.initState();
+  }
+
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -121,7 +133,7 @@ class _AccountScreenState extends State<AccountScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            'كامل عبد الرزاق الرفاعي',
+                            name,
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 20,
@@ -130,18 +142,6 @@ class _AccountScreenState extends State<AccountScreen> {
                             ),
                           ),
                         ],
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(top: 176),
-                      child: Text(
-                        'معلومات من انت؟',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 14,
-                          fontFamily: 'Janna LT',
-                          fontWeight: FontWeight.w400,
-                        ),
                       ),
                     ),
                     Container(
@@ -157,7 +157,7 @@ class _AccountScreenState extends State<AccountScreen> {
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.only(top: 265),
+                      margin: EdgeInsets.only(top: 200),
                       width: 141,
                       height: 43,
                       decoration: ShapeDecoration(
@@ -177,7 +177,7 @@ class _AccountScreenState extends State<AccountScreen> {
                       child: TextButton(
                         onPressed: () {},
                         child: const Text(
-                          'تسجيل الخروج',
+                          'Log-out',
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 15,
@@ -188,77 +188,12 @@ class _AccountScreenState extends State<AccountScreen> {
                       ),
                     ),
                     Container(
-                      margin: const EdgeInsets.only(top: 330),
+                      margin: const EdgeInsets.only(top: 300),
                       child: Row(
                         children: [
                           Container(
                             child: Text(
-                              'معلومات اضافية',
-                              style: TextStyle(
-                                color:
-                                    Colors.white.withOpacity(0.800000011920929),
-                                fontSize: 16,
-                                fontFamily: 'Janna LT',
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                          )
-                        ],
-                        mainAxisAlignment: MainAxisAlignment.center,
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(top: 370),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Container(
-                            width: MediaQuery.of(context).size.width - 120,
-                            height: 120,
-                            decoration: ShapeDecoration(
-                              color: Color(0xFF717AA4),
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(4)),
-                              shadows: [
-                                BoxShadow(
-                                  color: Color(0x3F000000),
-                                  blurRadius: 23,
-                                  offset: Offset(0, 12),
-                                  spreadRadius: 0,
-                                )
-                              ],
-                            ),
-                            child: TextField(
-                              textAlign: TextAlign.right,
-                              style: TextStyle(
-                                color: Colors.black
-                                    .withOpacity(0.6499999761581421),
-                                fontSize: 16,
-                                fontFamily: 'Janna LT',
-                                fontWeight: FontWeight.w700,
-                              ),
-                              maxLines: 8,
-                              decoration: InputDecoration(
-                                  hintText: '........اكتب هنا',
-                                  contentPadding:
-                                      EdgeInsets.only(right: 20, top: 10),
-                                  border: InputBorder.none,
-                                  fillColor: Colors.red),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 60,
-                    ),
-                    Container(
-                      margin: const EdgeInsets.only(top: 500),
-                      child: Row(
-                        children: [
-                          Container(
-                            child: Text(
-                              'اسم الشركة',
+                              'Company name',
                               style: TextStyle(
                                 color:
                                     Colors.white.withOpacity(0.800000011920929),
@@ -276,7 +211,7 @@ class _AccountScreenState extends State<AccountScreen> {
                       height: 6,
                     ),
                     Container(
-                      margin: EdgeInsets.only(top: 535),
+                      margin: EdgeInsets.only(top: 350),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -297,7 +232,7 @@ class _AccountScreenState extends State<AccountScreen> {
                               ],
                             ),
                             child: TextField(
-                              textAlign: TextAlign.right,
+                              textAlign: TextAlign.left,
                               style: TextStyle(
                                 color: Colors.black
                                     .withOpacity(0.6499999761581421),
@@ -306,8 +241,8 @@ class _AccountScreenState extends State<AccountScreen> {
                                 fontWeight: FontWeight.w700,
                               ),
                               decoration: InputDecoration(
-                                  hintText: '........اكتب هنا',
-                                  contentPadding: EdgeInsets.only(right: 20),
+                                  hintText: 'Write Here......',
+                                  contentPadding: EdgeInsets.only(left: 20),
                                   border: InputBorder.none,
                                   fillColor: Colors.red),
                             ),
@@ -316,7 +251,7 @@ class _AccountScreenState extends State<AccountScreen> {
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.only(top: 614),
+                      margin: EdgeInsets.only(top: 460),
                       width: 227,
                       height: 64,
                       child: TextButton(
@@ -327,7 +262,7 @@ class _AccountScreenState extends State<AccountScreen> {
                                   builder: (context) => Admin_Accounts()));
                         },
                         child: Text(
-                          'تحديث البيانات',
+                          'Update Data',
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 20,
