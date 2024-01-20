@@ -9,30 +9,54 @@ import 'package:rjd_app/Widgets/AppBar.dart';
 import 'package:flutter/services.dart';
 import 'package:rjd_app/Widgets/Drawer.dart';
 import 'package:http/http.dart' as http;
+import 'package:rjd_app/Widgets/new_post.dart';
 import 'package:rjd_app/Widgets/new_user.dart';
 import 'package:rjd_app/Widgets/user.dart';
 import 'package:rjd_app/Widgets/user_1.dart';
 
-class Admin_Accounts extends StatefulWidget {
-  const Admin_Accounts({super.key});
+class Admin_Reports extends StatefulWidget {
+  const Admin_Reports({super.key});
 
   @override
-  State<Admin_Accounts> createState() => _Admin_AccountsState();
+  State<Admin_Reports> createState() => _Admin_ReportsState();
 }
 
-class _Admin_AccountsState extends State<Admin_Accounts> {
-  List _users = [];
-  List users_ = [];
+class _Admin_ReportsState extends State<Admin_Reports> {
+  List _reports = [];
+  List reports_ = [];
+  String name = '';
+  String phone = '';
+  Future copy() async {
+    //Getting the id of the user proccess
+    final uri = Uri.parse('http://127.0.0.1:8000/api/post/$Title');
+    final response = await http.get(uri);
+    final id = jsonDecode(response.body)['user_id'];
+    print(id);
 
-  Future users() async {
-    final uri = Uri.parse('http://127.0.0.1:8000/api/users');
+    // Deleting proccess
+    final uri1 = Uri.parse('http://127.0.0.1:8000/api/user_id/$id');
+    final response1 = await http.get(uri1);
+    print(response1.body);
+    final user_name = jsonDecode(response1.body)['username'];
+    final phone_number = jsonDecode(response1.body)['phone'];
+
+    setState(() {
+      name = user_name;
+      phone = phone_number;
+    });
+    print(name);
+  }
+
+  Future reports() async {
+    final uri = Uri.parse('http://127.0.0.1:8000/api/posts');
     final response = await http.post(uri);
     final response1 = response.body;
     print(response1);
-    var users = jsonDecode(response1);
+
+    var reports = jsonDecode(response1);
     setState(() {
-      _users = users;
-      users_ = _users;
+      _reports = reports;
+      reports_ = _reports;
     });
 
     return jsonDecode(response.body);
@@ -45,9 +69,9 @@ class _Admin_AccountsState extends State<Admin_Accounts> {
       home: Scaffold(
         floatingActionButton: FloatingActionButton(
             onPressed: () {
-              users().then((value) => {
+              reports().then((value) => {
                     setState(() {
-                      users_ = _users;
+                      reports_ = _reports;
                     })
                   });
             },
@@ -80,7 +104,7 @@ class _Admin_AccountsState extends State<Admin_Accounts> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        'List of Users',
+                        'List of Reports',
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 24,
@@ -96,50 +120,21 @@ class _Admin_AccountsState extends State<Admin_Accounts> {
                   Container(
                     color: Color.fromARGB(0, 153, 115, 0),
                     width: MediaQuery.of(context).size.width - 110,
-                    height: _users.length * 110,
+                    height: reports_.length * 140,
                     child: ListView.separated(
                       separatorBuilder: (context, index) => SizedBox(
                         height: 40,
                       ),
-                      itemCount: users_.length.toInt(),
+                      itemCount: reports_.length.toInt(),
                       itemBuilder: (context, index) {
-                        final users_ = _users;
-                        final _index = index;
+                        final reports_ = _reports;
 
-                        return Slidable(
-                          endActionPane: ActionPane(
-                            motion: const StretchMotion(),
-                            children: [
-                              SlidableAction(
-                                onPressed: (context) => {
-                                  Clipboard.setData(ClipboardData(
-                                      text: _users[index]['phone']))
-                                },
-                                backgroundColor: Colors.transparent,
-                                icon: Icons.copy_rounded,
-                                label: "Phone Number",
-                              )
-                            ],
-                          ),
-                          startActionPane: ActionPane(
-                            motion: const StretchMotion(),
-                            children: [
-                              SlidableAction(
-                                onPressed: (context) => {
-                                  FlutterPhoneDirectCaller.callNumber(
-                                      _users[index]['phone'])
-                                },
-                                backgroundColor: Colors.transparent,
-                                icon: Icons.phone_callback,
-                                label: "Make a Call",
-                              )
-                            ],
-                          ),
-                          child: New_User(
-                            name: users_[index]['username'].toString(),
-                            company_name: users_[index]['company'].toString(),
-                            phone: users_[index]['phone'].toString(),
-                          ),
+                        return New_Post(
+                          Title: reports_[index]['Title'].toString(),
+                          Kind: reports_[index]['Kind'].toString(),
+                          place: reports_[index]['place'].toString(),
+                          other: reports_[index]['other'].toString(),
+                          user_id: reports_[index]['user_id'].toString(),
                         );
                       },
                     ),

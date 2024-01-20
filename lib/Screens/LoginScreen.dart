@@ -3,6 +3,7 @@ import 'package:rjd_app/Screens/AccountScreen.dart';
 import 'package:rjd_app/Screens/HomeScreen.dart';
 import 'package:http/http.dart' as http;
 import 'dart:io';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 
 class LoginScreen extends StatefulWidget {
@@ -44,14 +45,19 @@ class _LoginScreenState extends State<LoginScreen> {
     if (response.statusCode == 201) {
       Map<String, dynamic> map = json.decode(response.body);
       Map<String, dynamic> data = map["user_data"];
-      print(data["username"]);
+
+      SharedPreferences.setMockInitialValues({});
+      SharedPreferences Sharedpreferences =
+          await SharedPreferences.getInstance();
+      Sharedpreferences.setBool("Login", true);
+      Sharedpreferences.setString("username", data['username']);
+      Sharedpreferences.setString("id", data['id'].toString());
+      Sharedpreferences.setString("company", data['company']);
+      Sharedpreferences.setString("phone", data['phone']);
+      print(Sharedpreferences.getString("id"));
 
       Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => AccountScreen(
-                    username: data['username'],
-                  )));
+          context, MaterialPageRoute(builder: (context) => AccountScreen()));
 
       return json.decode(response.body);
     } else {

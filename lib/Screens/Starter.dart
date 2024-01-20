@@ -1,14 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:rjd_app/Screens/AccountScreen.dart';
 import 'package:rjd_app/Screens/LoginScreen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Starter extends StatefulWidget {
-  const Starter({super.key});
-
   @override
   State<Starter> createState() => _StarterState();
 }
 
 class _StarterState extends State<Starter> {
+  void redirect() async {
+    SharedPreferences sharedpreferences = await SharedPreferences.getInstance();
+    final bool1 = sharedpreferences.getBool("Login");
+    if (bool1 == null) {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => LoginScreen(),
+          ));
+    } else {
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => AccountScreen()));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -72,8 +87,7 @@ class _StarterState extends State<Starter> {
               ),
               TextButton(
                 onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => LoginScreen()));
+                  redirect();
                 },
                 style: TextButton.styleFrom(
                     primary: Color.fromARGB(255, 28, 198, 236)),

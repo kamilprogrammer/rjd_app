@@ -1,18 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:rjd_app/Screens/About.dart';
 import 'package:rjd_app/Screens/AccountScreen.dart';
+import 'package:rjd_app/Screens/Admin_Reports.dart';
 import 'package:rjd_app/Screens/HomeScreen.dart';
+import 'package:rjd_app/Screens/Starter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MainDrawer extends StatefulWidget {
-  const MainDrawer({super.key});
-
   @override
   State<MainDrawer> createState() => _MainDrawerState();
 }
 
 class _MainDrawerState extends State<MainDrawer> {
+  String username1 = '';
+  String company1 = '';
+  void get_username() async {
+    SharedPreferences sharedpreferences = await SharedPreferences.getInstance();
+    final username = sharedpreferences.getString("username");
+    final company = sharedpreferences.getString("company");
+    setState(() {
+      username1 = username.toString();
+      company1 = company.toString();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    get_username();
     return Drawer(
       child: SingleChildScrollView(
         child: Container(
@@ -33,7 +47,7 @@ class _MainDrawerState extends State<MainDrawer> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text('كامل عبد الرزاق الرفاعي',
+                        Text(username1,
                             style: TextStyle(
                               color: Colors.black,
                               fontSize: 16,
@@ -45,7 +59,7 @@ class _MainDrawerState extends State<MainDrawer> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text('شركة ارجي داتا للشبكات',
+                        Text(company1,
                             style: TextStyle(
                               color: Color.fromARGB(139, 0, 0, 0),
                               fontSize: 12,
@@ -60,19 +74,15 @@ class _MainDrawerState extends State<MainDrawer> {
               ListTile(
                 onTap: () {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => HomeScreen()));
+                      MaterialPageRoute(builder: (context) => Starter()));
                 },
                 title: Text('Home'),
                 leading: Icon(Icons.home),
               ),
               ListTile(
                 onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => AccountScreen(
-                                username: 'Kamel abdulrazzak rifai',
-                              )));
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => AccountScreen()));
                 },
                 title: Text(
                   'Account',
@@ -86,6 +96,14 @@ class _MainDrawerState extends State<MainDrawer> {
                 },
                 title: Text('About'),
                 leading: Icon(Icons.info_outline),
+              ),
+              ListTile(
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => Admin_Reports()));
+                },
+                title: Text('Reports'),
+                leading: Icon(Icons.report_gmailerrorred_rounded),
               ),
               ListTile(
                 onTap: () {},

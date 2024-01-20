@@ -5,6 +5,7 @@ import 'package:rjd_app/Screens/AccountScreen.dart';
 import 'package:rjd_app/Widgets/AppBar.dart';
 import 'package:rjd_app/Widgets/Drawer.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -23,12 +24,15 @@ class _HomeScreenState extends State<HomeScreen> {
       TextEditingController(text: 'Homs , Albir 3');
   TextEditingController others_controller =
       TextEditingController(text: 'Nothing ');
+  String username1 = '';
   void fetch(String title, String kind, String others, String place) async {
+    SharedPreferences sharedpreferences = await SharedPreferences.getInstance();
+    final username = sharedpreferences.getString("username");
     Map<String, dynamic> request = {
       'Title': title,
       'Kind': kind,
       'place': place,
-      "user_id": 1,
+      "user_id": sharedpreferences.getString("id"),
       "Other": others,
     };
     var re_request = jsonEncode(request);
@@ -41,6 +45,9 @@ class _HomeScreenState extends State<HomeScreen> {
     });
 
     if (response.statusCode == 201) {
+      setState(() {
+        username1 = username.toString();
+      });
       Map<String, dynamic> map = json.decode(response.body);
       return json.decode(response.body);
     } else {
@@ -362,9 +369,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => AccountScreen(
-                                          username: 'HI, I am not kamel',
-                                        )));
+                                    builder: (context) => AccountScreen()));
                           },
                           child: Text(
                             'Report',

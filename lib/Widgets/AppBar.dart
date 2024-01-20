@@ -69,7 +69,7 @@ class _MainAppBarState extends State<MainAppBar> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => LoginScreen()));
+                              builder: (context) => AccountScreen()));
                     },
                     child: Container(
                       width: 30,

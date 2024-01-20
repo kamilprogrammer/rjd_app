@@ -2,29 +2,27 @@ import 'package:flutter/material.dart';
 import 'package:rjd_app/Screens/Admin_Accounts.dart';
 import 'package:rjd_app/Widgets/AppBar.dart';
 import 'package:rjd_app/Widgets/Drawer.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AccountScreen extends StatefulWidget {
-  final String username;
-
-  const AccountScreen({
-    super.key,
-    required this.username,
-  });
-
   @override
   State<AccountScreen> createState() => _AccountScreenState();
 }
 
 class _AccountScreenState extends State<AccountScreen> {
-  String name = '';
-  @override
-  void initState() {
-    name = widget.username;
-
-    super.initState();
+  String username1 = '';
+  void get_username() async {
+    SharedPreferences sharedpreferences = await SharedPreferences.getInstance();
+    final username = sharedpreferences.getString("username");
+    setState(() {
+      username1 = username.toString();
+    });
   }
 
+  @override
   Widget build(BuildContext context) {
+    get_username();
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
@@ -133,7 +131,7 @@ class _AccountScreenState extends State<AccountScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            name,
+                            username1,
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 20,
@@ -142,18 +140,6 @@ class _AccountScreenState extends State<AccountScreen> {
                             ),
                           ),
                         ],
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(top: 204),
-                      child: Text(
-                        'اسم الشركة',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 14,
-                          fontFamily: 'Janna LT',
-                          fontWeight: FontWeight.w400,
-                        ),
                       ),
                     ),
                     Container(
@@ -188,12 +174,12 @@ class _AccountScreenState extends State<AccountScreen> {
                       ),
                     ),
                     Container(
-                      margin: const EdgeInsets.only(top: 300),
+                      margin: const EdgeInsets.only(top: 310),
                       child: Row(
                         children: [
                           Container(
                             child: Text(
-                              'Company name',
+                              'Phone number',
                               style: TextStyle(
                                 color:
                                     Colors.white.withOpacity(0.800000011920929),
@@ -251,7 +237,70 @@ class _AccountScreenState extends State<AccountScreen> {
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.only(top: 460),
+                      margin: const EdgeInsets.only(top: 440),
+                      child: Row(
+                        children: [
+                          Container(
+                            child: Text(
+                              'Company name',
+                              style: TextStyle(
+                                color:
+                                    Colors.white.withOpacity(0.800000011920929),
+                                fontSize: 16,
+                                fontFamily: 'Janna LT',
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                          )
+                        ],
+                        mainAxisAlignment: MainAxisAlignment.center,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 6,
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(top: 480),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            width: MediaQuery.of(context).size.width - 120,
+                            height: 49,
+                            decoration: ShapeDecoration(
+                              color: Color(0xFF717AA4),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(4)),
+                              shadows: [
+                                BoxShadow(
+                                  color: Color(0x3F000000),
+                                  blurRadius: 23,
+                                  offset: Offset(0, 12),
+                                  spreadRadius: 0,
+                                )
+                              ],
+                            ),
+                            child: TextField(
+                              textAlign: TextAlign.left,
+                              style: TextStyle(
+                                color: Colors.black
+                                    .withOpacity(0.6499999761581421),
+                                fontSize: 16,
+                                fontFamily: 'Janna LT',
+                                fontWeight: FontWeight.w700,
+                              ),
+                              decoration: InputDecoration(
+                                  hintText: 'Write Here......',
+                                  contentPadding: EdgeInsets.only(left: 20),
+                                  border: InputBorder.none,
+                                  fillColor: Colors.red),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(top: 580),
                       width: 227,
                       height: 64,
                       child: TextButton(
